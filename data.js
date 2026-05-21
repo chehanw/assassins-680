@@ -301,8 +301,8 @@ const TRIBUTES = [
   // ── May 21 ──────────────────────────────────────────────────────
   {
     name: "Jenin",
-    image: null,
-    noPhoto: true,
+    image: "pics/Jenin.png",
+    noPhoto: false,
     recent: false,
     killedBy: "Laith",
     date: "May 21",
@@ -312,8 +312,8 @@ const TRIBUTES = [
   },
   {
     name: "Niall",
-    image: null,
-    noPhoto: true,
+    image: "pics/Niall.png",
+    noPhoto: false,
     recent: false,
     killedBy: "Christina",
     date: "May 21",
@@ -323,8 +323,8 @@ const TRIBUTES = [
   },
   {
     name: "Keira",
-    image: null,
-    noPhoto: true,
+    image: "pics/Keira.png",
+    noPhoto: false,
     recent: true,
     killedBy: "Christina",
     date: "May 21",
