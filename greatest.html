@@ -365,8 +365,13 @@
       musicBtn.classList.add('playing');
     }
 
-    // attempt autoplay on load
-    window.addEventListener('load', () => startMusic());
+    // start on first interaction anywhere on the page
+    ['click', 'keydown', 'touchstart'].forEach(evt =>
+      document.addEventListener(evt, function onFirst() {
+        startMusic();
+        document.removeEventListener(evt, onFirst);
+      }, { once: true })
+    );
 
     musicBtn.addEventListener('click', () => {
       if (!musicStarted) { startMusic(); return; }

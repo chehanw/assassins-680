@@ -44,32 +44,13 @@
 
   <nav class="tabs" role="tablist">
     <button class="tab active" data-tab="fallen" role="tab" aria-selected="true">The Fallen</button>
-    <button class="tab" data-tab="target" role="tab" aria-selected="false">Next to Fall</button>
+    <a class="tab" href="greatest.html">A Tribute to the Greatest</a>
   </nav>
 
   <!-- ── Tab: The Fallen ── -->
   <div id="panel-fallen" class="tab-panel active">
     <main class="grid" id="grid"></main>
     <aside class="sidebar" id="sidebar" aria-label="Kill leaderboard"></aside>
-  </div>
-
-  <!-- ── Tab: Next to Fall ── -->
-  <div id="panel-target" class="tab-panel">
-    <section class="target-section">
-      <p class="target-eyebrow">Target Acquired</p>
-      <h2 class="target-name">Zane</h2>
-      <p class="target-kills-line">3 confirmed kills · Still standing</p>
-
-      <div class="target-photos">
-        <div class="frame target-frame"><img src="pics/Zane1.jpeg" alt="Zane" /></div>
-        <div class="frame target-frame"><img src="pics/Zane2.png"  alt="Zane" /></div>
-        <div class="frame target-frame"><img src="pics/Zane3.png"  alt="Zane" /></div>
-      </div>
-
-      <p class="target-threat">
-        <span id="typewriter"></span><span class="cursor" aria-hidden="true">|</span>
-      </p>
-    </section>
   </div>
 
   <footer class="footer">
@@ -183,37 +164,6 @@
       }
     });
 
-    // ── tab switching ──────────────────────────────────────────────
-    const tabs    = document.querySelectorAll('.tab');
-    const panels  = document.querySelectorAll('.tab-panel');
-
-    tabs.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.dataset.tab;
-
-        tabs.forEach(t => { t.classList.toggle('active', t === btn); t.setAttribute('aria-selected', t === btn); });
-        panels.forEach(p => p.classList.toggle('active', p.id === `panel-${target}`));
-
-        startMusic();
-        if (target === 'target') startTypewriter();
-      });
-    });
-
-    // ── typewriter animation ───────────────────────────────────────
-    const THREAT = "I am coming for you.";
-    let typeTimer = null;
-
-    function startTypewriter() {
-      const el = document.getElementById('typewriter');
-      clearTimeout(typeTimer);
-      el.textContent = '';
-      let i = 0;
-      function tick() {
-        el.textContent += THREAT[i++];
-        if (i < THREAT.length) typeTimer = setTimeout(tick, 90);
-      }
-      typeTimer = setTimeout(tick, 400);
-    }
   </script>
 </body>
 </html>
