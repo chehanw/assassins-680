@@ -132,15 +132,11 @@
 
     .slide-img {
       width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
+      object-fit: contain; object-position: center center;
       display: block;
-      filter: grayscale(0.15) contrast(1.05) brightness(0.82);
+      filter: grayscale(0.15) contrast(1.05) brightness(0.88);
       transform-origin: center center;
     }
-
-    /* alternate Ken Burns directions for variety */
-    .slide:nth-child(odd)  .slide-img { transform-origin: 60% 40%; }
-    .slide:nth-child(even) .slide-img { transform-origin: 40% 60%; }
 
     @keyframes ken-burns {
       from { transform: scale(1); }
