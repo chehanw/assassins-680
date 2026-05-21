@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Fallen — Senior Assassins 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ambient layers -->
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="embers" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <header class="masthead">
+    <p class="eyebrow">Stanford · Class of 2026</p>
+    <h1 class="title">The Fallen</h1>
+    <p class="subtitle">Senior Assassins · In Memoriam</p>
+    <p class="count"><span id="death-count">0</span> Tributes Eliminated</p>
+  </header>
+
+  <div class="masthead-rule" aria-hidden="true"><span>✦</span></div>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="fallen" role="tab" aria-selected="true">The Fallen</button>
+    <button class="tab" data-tab="target" role="tab" aria-selected="false">Next to Fall</button>
+  </nav>
+
+  <!-- ── Tab: The Fallen ── -->
+  <div id="panel-fallen" class="tab-panel active">
+    <main class="grid" id="grid"></main>
+    <aside class="sidebar" id="sidebar" aria-label="Kill leaderboard"></aside>
+  </div>
+
+  <!-- ── Tab: Next to Fall ── -->
+  <div id="panel-target" class="tab-panel">
+    <section class="target-section">
+      <p class="target-eyebrow">Target Acquired</p>
+      <h2 class="target-name">Zane</h2>
+      <p class="target-kills-line">3 confirmed kills · Still standing</p>
+
+      <div class="target-photos">
+        <div class="frame target-frame"><img src="pics/Zane1.jpeg" alt="Zane" /></div>
+        <div class="frame target-frame"><img src="pics/Zane2.png"  alt="Zane" /></div>
+        <div class="frame target-frame"><img src="pics/Zane3.png"  alt="Zane" /></div>
+      </div>
+
+      <p class="target-threat">
+        <span id="typewriter"></span><span class="cursor" aria-hidden="true">|</span>
+      </p>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <p class="footer-mark">✦ ✦ ✦</p>
+    <p class="footer-text">May the odds be ever in your favor.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    // ── kill counts from tribute data ──────────────────────────────
+    const firstNameMap = {};
+    TRIBUTES.forEach(t => {
+      firstNameMap[t.name.split(' ')[0].toLowerCase()] = t.name;
+    });
+    const killCounts = {};
+    TRIBUTES.forEach(t => {
+      if (!t.killedBy) return;
+      const match = firstNameMap[t.killedBy.split(/\s+/)[0].toLowerCase()];
+      if (match) killCounts[match] = (killCounts[match] || 0) + 1;
+    });
+
+    // ── tribute card renderer ──────────────────────────────────────
+    function renderTribute(t) {
+      const cls = ['tribute', t.noPhoto && 'no-photo', t.recent && 'recent', !t.killedBy && !t.date && 'unknown']
+        .filter(Boolean).join(' ');
+
+      const inner = t.noPhoto
+        ? '<span class="silhouette" aria-hidden="true"></span>'
+        : `<img src="${t.image}" alt="${t.name}" loading="lazy" />`;
+
+      const kills = killCounts[t.name] || 0;
+      const killBadge = kills > 0 ? `<span class="kills">✕ ${kills}</span>` : '';
+
+      const whenLine     = t.date     ? `<p class="detail-when">${t.date}${t.time ? ' · ' + t.time : ''}</p>` : '';
+      const methodLine   = t.method   ? `<p class="detail-meta">${t.method}</p>`   : '';
+      const locationLine = t.location ? `<p class="detail-meta">${t.location}</p>` : '';
+
+      const detail = t.killedBy
+        ? `<div class="detail" aria-hidden="true">
+             <p class="detail-killer">Eliminated by <strong>${t.killedBy}</strong></p>
+             ${whenLine}${methodLine}${locationLine}
+           </div>`
+        : '';
+
+      return `<article class="${cls}" tabindex="0">
+        <div class="frame">${inner}${killBadge}${detail}</div>
+        <p class="name">${t.name}</p>
+      </article>`;
+    }
+
+    // ── render fallen grid ─────────────────────────────────────────
+    const grid = document.getElementById('grid');
+    const parts = [];
+    let lastDate = null;
+    TRIBUTES.forEach(t => {
+      const dateKey = t.date || '__unknown__';
+      if (dateKey !== lastDate) {
+        parts.push(`<div class="date-header" role="separator"><span>${t.date || 'Unknown Date'}</span></div>`);
+        lastDate = dateKey;
+      }
+      parts.push(renderTribute(t));
+    });
+    grid.innerHTML = parts.join('');
+    document.getElementById('death-count').textContent = TRIBUTES.length;
+
+    grid.querySelectorAll('.tribute').forEach((el, i) => {
+      el.style.setProperty('--stagger', `${Math.min(i * 0.05, 0.65)}s`);
+    });
+
+    grid.addEventListener('click', e => {
+      const card = e.target.closest('.tribute');
+      if (card) card.classList.toggle('touched');
+    });
+
+    // ── render sidebar ─────────────────────────────────────────────
+    const sorted = [...SURVIVORS].sort((a, b) => b.kills - a.kills);
+    const rows = sorted.map(s => `
+      <li class="survivor-row">
+        <span class="survivor-name">${s.name}</span>
+        <span class="survivor-kills">✕ ${s.kills}</span>
+      </li>`).join('');
+    document.getElementById('sidebar').innerHTML = `
+      <p class="sidebar-title">Still Standing</p>
+      <ul class="survivor-list">${rows}</ul>`;
+
+    // ── tab switching ──────────────────────────────────────────────
+    const tabs    = document.querySelectorAll('.tab');
+    const panels  = document.querySelectorAll('.tab-panel');
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+
+        tabs.forEach(t => { t.classList.toggle('active', t === btn); t.setAttribute('aria-selected', t === btn); });
+        panels.forEach(p => p.classList.toggle('active', p.id === `panel-${target}`));
+
+        if (target === 'target') startTypewriter();
+      });
+    });
+
+    // ── typewriter animation ───────────────────────────────────────
+    const THREAT = "I am coming for you.";
+    let typeTimer = null;
+
+    function startTypewriter() {
+      const el = document.getElementById('typewriter');
+      clearTimeout(typeTimer);
+      el.textContent = '';
+      let i = 0;
+      function tick() {
+        el.textContent += THREAT[i++];
+        if (i < THREAT.length) typeTimer = setTimeout(tick, 90);
+      }
+      typeTimer = setTimeout(tick, 400);
+    }
+  </script>
+</body>
+</html>
