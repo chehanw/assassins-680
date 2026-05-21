@@ -9,6 +9,7 @@ const SURVIVORS = [
   { name: "Maya",      kills: 1, image: "pics/Maya.png" },
   { name: "Agam",      kills: 1, image: "pics/Agam.png" },
   { name: "Angela",    kills: 1, image: "pics/Angela.png" },
+  { name: "Ameya",     kills: 0, image: "pics/Ameya.png" },
   { name: "Aniket",    kills: 1, image: "pics/Aniket.png" },
   { name: "Laith",     kills: 1, image: "pics/Laith.png" },
   { name: "Valeria",   kills: 0, image: "pics/Valeria.png" },
