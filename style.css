@@ -581,6 +581,7 @@ body {
   text-transform: uppercase;
   color: var(--muted);
   cursor: pointer;
+  text-decoration: none;
   transition: color 0.3s, border-color 0.3s;
 }
 .tab:hover { color: var(--bone); }
