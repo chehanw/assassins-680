@@ -1,16 +1,24 @@
 // Players still in the game, ordered by kill count.
 // When someone is eliminated: remove from here, add to TRIBUTES below.
 const SURVIVORS = [
-  { name: "Zane",      kills: 3 },
-  { name: "Christina", kills: 3 },
-  { name: "Isaiah",    kills: 2 },
-  { name: "Sam",       kills: 2 },
-  { name: "Breno",     kills: 1 },
-  { name: "Maya",      kills: 1 },
-  { name: "Agam",      kills: 1 },
-  { name: "Angela",    kills: 1 },
-  { name: "Aniket",    kills: 1 },
-  { name: "Laith",     kills: 1 },
+  { name: "Zane",      kills: 3, image: "pics/Zane1.jpeg" },
+  { name: "Christina", kills: 3, image: "pics/Christina.png" },
+  { name: "Isaiah",    kills: 2, image: null },
+  { name: "Sam",       kills: 2, image: null },
+  { name: "Breno",     kills: 1, image: "pics/Breno.png" },
+  { name: "Maya",      kills: 1, image: "pics/Maya.png" },
+  { name: "Agam",      kills: 1, image: "pics/Agam.png" },
+  { name: "Angela",    kills: 1, image: "pics/Angela.png" },
+  { name: "Aniket",    kills: 1, image: "pics/Aniket.png" },
+  { name: "Laith",     kills: 1, image: "pics/Laith.png" },
+  { name: "Valeria",   kills: 0, image: "pics/Valeria.png" },
+  { name: "Ella",      kills: 0, image: "pics/Ella.png" },
+  { name: "Sameeh",    kills: 0, image: "pics/Sameeh.png" },
+  { name: "Ryan",      kills: 0, image: "pics/Ryan.png" },
+  { name: "Isaac",     kills: 0, image: "pics/Isaac.png" },
+  { name: "Kate",      kills: 0, image: "pics/Kate.png" },
+  { name: "Jasmine",   kills: 0, image: "pics/Jasmine.png" },
+  { name: "Casey",     kills: 0, image: "pics/Casey.png" },
 ];
 
 // Tributes in chronological elimination order.

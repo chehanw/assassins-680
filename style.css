@@ -312,6 +312,41 @@ body {
   opacity: 0.5;
 }
 
+/* ---------- survivors count header ---------- */
+
+.survivors-count {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 32px 0 0;
+}
+
+/* ---------- alive tribute cards ---------- */
+
+.tribute.alive .frame {
+  border-color: var(--gold-dim);
+}
+.tribute.alive .frame img {
+  filter: contrast(1.05) brightness(0.92);  /* full colour — no grayscale */
+}
+.tribute.alive:hover .frame {
+  border-color: var(--gold);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.5),
+    0 0 30px rgba(200,161,74,0.3),
+    0 18px 40px rgba(0,0,0,0.7);
+  transform: translateY(-2px);
+}
+.tribute.alive:hover .frame img {
+  filter: contrast(1.08) brightness(1);
+  transform: scale(1.02);
+}
+
 /* ---------- kill count badge ---------- */
 
 .kills {

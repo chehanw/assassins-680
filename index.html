@@ -44,6 +44,7 @@
 
   <nav class="tabs" role="tablist">
     <button class="tab active" data-tab="fallen" role="tab" aria-selected="true">The Fallen</button>
+    <button class="tab" data-tab="survivors" role="tab" aria-selected="false">Yet to Fall</button>
     <a class="tab" href="greatest.html">A Tribute to the Greatest</a>
   </nav>
 
@@ -51,6 +52,12 @@
   <div id="panel-fallen" class="tab-panel active">
     <main class="grid" id="grid"></main>
     <aside class="sidebar" id="sidebar" aria-label="Kill leaderboard"></aside>
+  </div>
+
+  <!-- ── Tab: Yet to Fall ── -->
+  <div id="panel-survivors" class="tab-panel">
+    <p class="survivors-count" id="survivors-count"></p>
+    <main class="grid" id="grid-survivors"></main>
   </div>
 
   <footer class="footer">
@@ -152,6 +159,41 @@
 
     // attempt autoplay on load
     window.addEventListener('load', () => startMusic());
+
+    // ── tab switching ──────────────────────────────────────────────
+    const tabBtns = document.querySelectorAll('.tab[data-tab]');
+    const panels  = document.querySelectorAll('.tab-panel');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        tabBtns.forEach(t => { t.classList.toggle('active', t === btn); t.setAttribute('aria-selected', t === btn); });
+        panels.forEach(p => p.classList.toggle('active', p.id === `panel-${target}`));
+        startMusic();
+      });
+    });
+
+    // ── render survivors grid ──────────────────────────────────────
+    const survivorsSorted = [...SURVIVORS].sort((a, b) => b.kills - a.kills || a.name.localeCompare(b.name));
+
+    function renderSurvivor(s) {
+      const inner = s.image
+        ? `<img src="${s.image}" alt="${s.name}" loading="lazy" />`
+        : `<span class="silhouette" aria-hidden="true"></span>`;
+      const killBadge = s.kills > 0 ? `<span class="kills">✕ ${s.kills}</span>` : '';
+      return `<article class="tribute alive${!s.image ? ' no-photo' : ''}">
+        <div class="frame">${inner}${killBadge}</div>
+        <p class="name">${s.name}</p>
+      </article>`;
+    }
+
+    const gridSurvivors = document.getElementById('grid-survivors');
+    gridSurvivors.innerHTML = survivorsSorted.map(renderSurvivor).join('');
+    gridSurvivors.querySelectorAll('.tribute').forEach((el, i) => {
+      el.style.setProperty('--stagger', `${Math.min(i * 0.05, 0.65)}s`);
+    });
+    document.getElementById('survivors-count').textContent =
+      `${SURVIVORS.length} Players Remaining`;
 
     musicBtn.addEventListener('click', () => {
       if (!musicStarted) { startMusic(); return; }
