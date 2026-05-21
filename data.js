@@ -1,10 +1,10 @@
 // Players still in the game, ordered by kill count.
 // When someone is eliminated: remove from here, add to TRIBUTES below.
 const SURVIVORS = [
-  { name: "Zane",      kills: 3, image: "pics/Zane1.jpeg" },
+  { name: "Zane",      kills: 3, image: "pics/Zane.png" },
   { name: "Christina", kills: 3, image: "pics/Christina.png" },
-  { name: "Isaiah",    kills: 2, image: null },
-  { name: "Sam",       kills: 2, image: null },
+  { name: "Isaiah",    kills: 2, image: "pics/Isaiah.png" },
+  { name: "Sam",       kills: 2, image: "pics/Sam_Dawson_Shors.png" },
   { name: "Breno",     kills: 1, image: "pics/Breno.png" },
   { name: "Maya",      kills: 1, image: "pics/Maya.png" },
   { name: "Agam",      kills: 1, image: "pics/Agam.png" },
@@ -19,6 +19,8 @@ const SURVIVORS = [
   { name: "Kate",      kills: 0, image: "pics/Kate.png" },
   { name: "Jasmine",   kills: 0, image: "pics/Jasmine.png" },
   { name: "Casey",     kills: 0, image: "pics/Casey.png" },
+  { name: "Aditri",   kills: 0, image: "pics/Aditri.png" },
+  { name: "Ashley",   kills: 0, image: "pics/Ashley.png" },
 ];
 
 // Tributes in chronological elimination order.
