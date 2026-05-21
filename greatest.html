@@ -359,10 +359,14 @@
     function startMusic() {
       if (musicStarted) return;
       musicStarted = true;
+      music.currentTime = 60;
       music.volume = 0.55;
       music.play().catch(() => {});
       musicBtn.classList.add('playing');
     }
+
+    // attempt autoplay on load
+    window.addEventListener('load', () => startMusic());
 
     musicBtn.addEventListener('click', () => {
       if (!musicStarted) { startMusic(); return; }
